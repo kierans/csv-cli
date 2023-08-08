@@ -1,0 +1,23 @@
+{
+  "name": "csv-cli",
+  "version": "0.1.0",
+  "description": "A CLI wrapper around the node csv package",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kierans/csv-cli.git"
+  },
+  "keywords": [
+    "csv",
+    "cli"
+  ],
+  "author": "Kieran Simpson <kierans777@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kierans/csv-cli/issues"
+  },
+  "homepage": "https://github.com/kierans/csv-cli#readme"
+}

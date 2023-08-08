@@ -15,6 +15,8 @@ const createPipeline = (type) => {
 				jsonWriter()
 			];
 
+		// TODO: Add JSON to CSV
+
 		default:
 			throw new Error(`Unrecognised type ${type}`);	
 	}

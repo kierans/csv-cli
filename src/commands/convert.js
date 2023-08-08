@@ -1,17 +1,34 @@
 
 const { Command } = require("commander");
 
+const { csvParser } = require("../csv")
 const { createInputStream, createOutputStream } = require("../streams");
+const { jsonWriter } = require("../json");
 const { pipeline } = require("../pipeline");
 
+// createPipeline :: String -> [Duplex]
+const createPipeline = (type) => {
+	switch (type) {
+		case 'json':
+			return [
+				csvParser(),
+				jsonWriter()
+			];
+
+		default:
+			throw new Error(`Unrecognised type ${type}`);	
+	}
+}
+
 const handler = async (opts) => {
+	const type = opts.type;
 	const input = createInputStream(process.stdin, opts.input);
 	const output = createOutputStream(process.stdout, opts.output)
 
-	await pipeline()(
+	await pipeline(...createPipeline(type))(
 		input,
 		output
-	)
+	);
 }
 
 const helpText =

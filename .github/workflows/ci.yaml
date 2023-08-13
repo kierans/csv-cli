@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: build-${{ env.SHA }}
-          path: "build"
+          path: "."
 
   publish:
     runs-on: ubuntu-latest
@@ -62,7 +62,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: build-${{ env.SHA }}
-          path: "build"
+          path: "."
           fail-on-cache-miss: true
 
       - name: Setup Node

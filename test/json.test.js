@@ -29,7 +29,7 @@ describe("json", function() {
 
 			readable.on("end", () => resolve(data));
 
-			readable.on("error", (err) => reject(err));
+			readable.on("error", reject);
 		});
 	};
 

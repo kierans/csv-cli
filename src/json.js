@@ -36,21 +36,32 @@ const jsonWriter = () => {
 const jsonParser = () => {
   let data = "";
 
+  const convertChunk = (chunk) => {
+    if (Buffer.isBuffer(chunk)) {
+      return chunk.toString();
+    }
+    else {
+      return chunk;
+    }
+  }
+
   return new Transform({
     objectMode: true,
     transform(chunk, encoding, callback) {
-      if (Buffer.isBuffer(chunk)) {
-        data += chunk.toString();
-      }
-      else {
-        data += chunk;
-      }
+      data += convertChunk(chunk);
 
       callback();
     },
     flush(callback) {
       try {
-        this.push(JSON.parse(data));
+        const json = JSON.parse(data);
+
+        if (Array.isArray(json)) {
+          json.forEach(this.push.bind(this));
+        }
+        else {
+          this.push(json);
+        }
 
         callback();
       }

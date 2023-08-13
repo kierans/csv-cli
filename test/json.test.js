@@ -15,10 +15,15 @@ describe("json", function() {
 		return new Promise((resolve, reject) => {
 			readable.on("data", (chunk) => {
 				if (data) {
-					data += chunk;
+					data = data.concat(chunk);
 				}
 				else {
-					data = chunk;
+					if (typeof chunk === "string") {
+						data = chunk;
+					}
+					else {
+						data = [ chunk ];
+					}
 				}
 			});
 

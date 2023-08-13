@@ -1,9 +1,9 @@
 
 const { Command } = require("commander");
 
-const { csvParser } = require("../csv")
+const { csvParser, csvWriter } = require("../csv")
 const { createInputStream, createOutputStream } = require("../streams");
-const { jsonWriter } = require("../json");
+const { jsonParser, jsonWriter } = require("../json");
 const { pipeline } = require("../pipeline");
 
 // createPipeline :: String -> [Duplex]
@@ -15,10 +15,14 @@ const createPipeline = (type) => {
 				jsonWriter()
 			];
 
-		// TODO: Add JSON to CSV
+		case 'csv':
+			return [
+				jsonParser(),
+				csvWriter()
+			]
 
 		default:
-			throw new Error(`Unrecognised type ${type}`);	
+			throw new Error(`Unrecognised type ${type}`);
 	}
 }
 

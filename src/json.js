@@ -1,6 +1,6 @@
 const { Transform } = require("stream");
 
-// jsonWriter :: () => Duplex
+// jsonWriter :: () -> Duplex
 const jsonWriter = () => {
   let count = 0;
 
@@ -32,6 +32,36 @@ const jsonWriter = () => {
   })
 }
 
+// jsonParser :: () -> Duplex
+const jsonParser = () => {
+  let data = "";
+
+  return new Transform({
+    objectMode: true,
+    transform(chunk, encoding, callback) {
+      if (Buffer.isBuffer(chunk)) {
+        data += chunk.toString();
+      }
+      else {
+        data += chunk;
+      }
+
+      callback();
+    },
+    flush(callback) {
+      try {
+        this.push(JSON.parse(data));
+
+        callback();
+      }
+      catch (e) {
+        callback(e);
+      }
+    }
+  });
+}
+
 module.exports = {
+  jsonParser,
   jsonWriter
 }

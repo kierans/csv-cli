@@ -36,14 +36,8 @@ const jsonWriter = () => {
 const jsonParser = () => {
   let data = "";
 
-  const convertChunk = (chunk) => {
-    if (Buffer.isBuffer(chunk)) {
-      return chunk.toString();
-    }
-    else {
-      return chunk;
-    }
-  }
+  const convertChunk = (chunk) =>
+    Buffer.isBuffer(chunk) ? chunk.toString() : chunk
 
   return new Transform({
     objectMode: true,
